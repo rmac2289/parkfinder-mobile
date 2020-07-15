@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
         borderBottomColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 20
     },
     navList: {
         flexDirection: 'row',

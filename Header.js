@@ -1,13 +1,15 @@
 /* eslint-disable keyword-spacing */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ImageBackground } from 'react-native';
 
 
 
 
 export default function Header(){
+    const image = { uri: 'https://ross-scott-macdonald.com/Muir-Wood.jpg'}
     return (
+    <ImageBackground source={image} style={styles.image}>
     <View style={styles.header}>
         <View style={styles.headerContainer}>
             <Text style={styles.headerText}>find your park</Text>
@@ -19,6 +21,8 @@ export default function Header(){
             </Text>
         </View>
     </View>
+    </ImageBackground>
+    
     )
 }
 
@@ -29,30 +33,42 @@ const styles = StyleSheet.create({
         width: '85%',
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundColor: '#414f47',
         padding: '2%',
+        paddingTop: 25,
+        
     },
+    image: {
+        resizeMode: "cover",
+        justifyContent: "center"
+      },
     headerContainer: {
         textAlign: 'center',
         display: 'flex',
         flexDirection: 'column',
     },
     headerText: {
-        color: 'white',
         fontSize: 55,
         marginBottom: 0,
         borderWidth: 2,
-        borderColor: 'white',
+        borderColor: '#414f47',
+        overflow: 'hidden',
         borderRadius: 10,
         padding: '2%',
-        marginBottom: 20
+        marginBottom: 20,
+        color: '#414f47',
+        backgroundColor: 'rgba(255,255,255,0.8)',
     },
     headerP: {
-        color: 'white',
+        backgroundColor: 'rgba(255,255,255,0.8)',
+        color: '#414f47',
+        overflow: 'hidden',
+        borderRadius: 10,
+        padding: '2s%',
+        borderWidth: 2,
+        borderColor: '#414f47',
         marginLeft: 'auto',
         marginRight: 'auto',
         fontSize: 18,
-        padding: '2%'
     }
 
 });

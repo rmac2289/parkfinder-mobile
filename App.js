@@ -1,20 +1,19 @@
 import React from 'react';
-import Header from './TestHeader';
+import Header from './Header';
 import Nav from './Nav';
+import Search from './Search';
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
-  StatusBar
+  StatusBar,
 } from 'react-native';
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-
 const App = () => {
+
   return (
-    <>
-              <View >
+      <View >
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
@@ -22,6 +21,7 @@ const App = () => {
           style={styles.scrollView}>
           <Nav />
           <Header />
+          <Search />
           <View style={styles.body}>
             
             
@@ -29,20 +29,15 @@ const App = () => {
         </ScrollView>
       </SafeAreaView>
       </View>
-      </>
   );
 };
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: '#414f47',
   },
   engine: {
     position: 'absolute',
     right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
   },
   sectionContainer: {
     marginTop: 32,
@@ -51,19 +46,16 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 24,
     fontWeight: '600',
-    color: Colors.black,
   },
   sectionDescription: {
     marginTop: 8,
     fontSize: 18,
     fontWeight: '400',
-    color: Colors.dark,
   },
   highlight: {
     fontWeight: '700',
   },
   footer: {
-    color: Colors.dark,
     fontSize: 12,
     fontWeight: '600',
     padding: 4,
