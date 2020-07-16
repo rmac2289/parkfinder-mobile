@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { View, ScrollView, Text, StyleSheet, ImageBackground } from 'react-native';
-
 export default function Nav(){
     return (
     <View style={styles.nav} className="nav">

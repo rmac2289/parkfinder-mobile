@@ -9,6 +9,8 @@ import {
   View,
   StatusBar,
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+
 
 const App = () => {
 

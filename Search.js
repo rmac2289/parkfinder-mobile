@@ -2,8 +2,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Button, TextInput, ImageBackground } from 'react-native';
-import { Container, Header, Content, Form, Item, Picker, Icon } from 'native-base';
-import PickerCustomHeaderExample from './Picker';
+import PickerExample from './Picker';
 
 
 export default function Search(){
@@ -17,6 +16,7 @@ export default function Search(){
             onChangeText={text => onChangeText(text)}
             value={value}
     />
+    <PickerExample/>
         <Button style={styles.button} color="white" title="search"/>
         </View>
     </View>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         padding: '2%',
         paddingTop: 25,
         backgroundColor: '#414f47',
-        width: '100%' 
+        width: '100%' ,
     },
     button: {
         borderWidth: 1,
