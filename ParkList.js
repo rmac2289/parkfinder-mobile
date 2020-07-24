@@ -7,17 +7,30 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 export default function Parklist(){
-    const [parkName] = useContext(ParkNameContext)
+    const [parkName, setParkName] = useContext(ParkNameContext)
     const [park] = useContext(ParkContext)
-    const parksToDisplay = park.data.filter((v) => {
+    
+     function compare(a, b) {
+        const nameA = a.fullName.toUpperCase();
+        const nameB = b.fullName.toUpperCase();
+      
+        let comparison = 0;
+        if (nameA > nameB) {
+          comparison = 1;
+        } else if (nameA < nameB) {
+          comparison = -1;
+        }
+        return comparison;
+      };
+      const parksToDisplay = park.data.filter((v) => {
         return v.fullName.toLowerCase().includes(parkName.toLowerCase())
      });
 
     // maps parksToDisplay to show parks matching park name
-    const parkList = parksToDisplay.map((v,i) => {
+    const parkList = parksToDisplay.sort(compare).map((v,i) => {
         return <View className="park-list-item" key={i}>
             
-            <TouchableOpacity style={styles.button} to={`/park/${v.fullName}`}>
+            <TouchableOpacity style={styles.button} >
                 <Text style={styles.parkName}>{v.fullName}</Text>
             </TouchableOpacity>
           
