@@ -153,6 +153,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		640B03DA058D41C18B8DE8D9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D305E2FE24CA946000722477 /* Fonts */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,7 +171,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				D305E30024CA971D00722477 /* Resources */,
 				D3D1FF5324BBEDE000E2C350 /* Default-568h@2x.png */,
 				13B07FAE1A68108700A75B9A /* testProject */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -171,6 +178,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				92A9B9959C811A19071FBDD8 /* Pods */,
+				640B03DA058D41C18B8DE8D9 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -201,14 +209,6 @@
 				32E1A7FD422BA3F1104DC468 /* Pods-testProject-tvOSTests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		D305E30024CA971D00722477 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				D305E2FE24CA946000722477 /* Fonts */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

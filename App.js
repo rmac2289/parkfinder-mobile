@@ -1,69 +1,50 @@
-import React from 'react';
-import Header from './Header';
-import Nav from './Nav';
-import Search from './Search';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  StatusBar,
-} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Main from './Main';
+import Login from './Login';
+import Parklist from './ParkList';
+import { ParkContextProvider } from './Contexts/ParkContext';
+import { ActivityContextProvider } from './Contexts/ActivitiesContext';
+import { ParkNameContextProvider } from './Contexts/ParkNameContext';
+import { CommentsContextProvider } from './Contexts/CommentsContext';
+import { RedirectContextProvider } from './Contexts/RedirectContext';
+import { LoginContextProvider } from './Contexts/LoginContext';
+const Stack = createStackNavigator();
 
 const App = () => {
 
   return (
-      <View >
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Nav />
-          <Header />
-          <Search />
-          <View style={styles.body}>
-            
-            
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-      </View>
+    <ActivityContextProvider>
+    <LoginContextProvider>
+        <ParkNameContextProvider>
+            <CommentsContextProvider>
+                <RedirectContextProvider>
+                  <ParkContextProvider>
+                    <NavigationContainer>
+                     <Stack.Navigator>
+                       <Stack.Screen
+                        name="Home"
+                        component={Main}
+                      />
+                      <Stack.Screen
+                        name="Login"
+                        component={Login}
+                      />
+                      <Stack.Screen
+                        name="Parklist"
+                        component={Parklist}
+                      />
+                    </Stack.Navigator>
+                  </NavigationContainer>
+                </ParkContextProvider>
+              </RedirectContextProvider>
+            </CommentsContextProvider>
+          </ParkNameContextProvider>
+        </LoginContextProvider>
+      </ActivityContextProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App;

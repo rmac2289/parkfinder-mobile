@@ -5,7 +5,6 @@ import { StyleSheet, View, Text, ImageBackground } from 'react-native';
 
 
 
-
 export default function Header(){
     const image = { uri: 'https://ross-scott-macdonald.com/Muir-Wood.jpg'}
     return (
@@ -35,7 +34,6 @@ const styles = StyleSheet.create({
         marginRight: 'auto',
         padding: '2%',
         paddingTop: 25,
-        
     },
     image: {
         resizeMode: "cover",

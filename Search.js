@@ -5,19 +5,19 @@ import { StyleSheet, View, Button, TextInput } from 'react-native';
 import PickerExample from './Picker';
 
 
-export default function Search(){
-
-    const [value, onChangeText] = useState('');
+export default function Search(props){
+    const [text, setText] = useState('');
     return (
     <View style={styles.search}>
         <View style={styles.searchContainer}>
         <TextInput
             style={styles.searchInput}
-            onChangeText={text => onChangeText(text)}
-            value={value}
+            onChangeText={text => setText(text)}
+            value={text}
+            placeholder="Park name..."
     />
     <PickerExample/>
-        <Button style={styles.button} color="white" title="search"/>
+        <Button onPress={props.press} style={styles.button} color="white" title="search"/>
         </View>
     </View>
     
@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.9)',
         height: 40,
         borderRadius: 10,
-        padding: '1%',
-        width: 200
+        width: 400,
+        paddingLeft: 10,
+        fontSize: 18
     }
 });
