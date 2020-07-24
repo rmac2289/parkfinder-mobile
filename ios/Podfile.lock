@@ -300,6 +300,8 @@ PODS:
     - React
   - RNGestureHandler (1.6.1):
     - React
+  - RNVectorIcons (7.0.0):
+    - React
   - toolbar-android (0.1.0-rc.2):
     - React
   - Yoga (1.14.0)
@@ -355,6 +357,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCPicker (from `../node_modules/@react-native-community/picker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - "toolbar-android (from `../node_modules/@react-native-community/toolbar-android`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -428,6 +431,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/picker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   toolbar-android:
     :path: "../node_modules/@react-native-community/toolbar-android"
   Yoga:
@@ -472,10 +477,11 @@ SPEC CHECKSUMS:
   ReactCommon: f63556ee9e41e9802257228237e5e660451a03cf
   RNCPicker: 55b9b4240d0a9eba8733d02616775d4040de2e7d
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
+  RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
   toolbar-android: 404f4450b203597e7b417f714ff417bed562a1be
   Yoga: 7d2edc5b410474191962e6dee88ee67f9b328b6b
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 6f278d9cd5ee09e98cddd7e5590085f164138fbc
+PODFILE CHECKSUM: c9ce98695a950d1abf655bdc12e7cf06238adee0
 
 COCOAPODS: 1.9.3

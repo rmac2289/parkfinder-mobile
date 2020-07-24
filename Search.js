@@ -1,7 +1,7 @@
 /* eslint-disable keyword-spacing */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Button, TextInput, ImageBackground } from 'react-native';
+import { StyleSheet, View, Button, TextInput } from 'react-native';
 import PickerExample from './Picker';
 
 
