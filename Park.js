@@ -1,6 +1,6 @@
 
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Dimensions, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ParkContext } from './Contexts/ParkContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -46,7 +46,7 @@ export default function Park(props){
 
 
 return (
-    <View style={styles.park}>
+    <ScrollView style={styles.park}>
         <View style={styles.nav} className="nav">
         <ScrollView className="nav-list">
             <View style={styles.navList}>
@@ -67,10 +67,10 @@ return (
     </View>
         <View style={styles.parkContainer}>
             <Text style={styles.header}>{filtered[0].fullName}</Text>
-            {filtered[0].description && <Text>{filtered[0].description}</Text>}
+            {filtered[0].description && <Text style={styles.hoursLight}>{filtered[0].description}</Text>}
             <Text style={styles.hours}>Hours: <Text style={styles.hoursLight}>{filtered[0].hours}</Text></Text>
             <View style={styles.mainContainer}>
-            {error !== null ? <Text>Hmm, something went wrong. Please refresh or try again later.</Text>:
+            {error !== null ? <Text style={styles.weatherError}>Hmm, something went wrong. Please refresh or try again later.</Text>:
             <ScrollView style={styles.weatherBox}>
                 <Text style={styles.weatherHeader}>Weather</Text>
             {weather.length !== 0 ? weather.map((v,i) => {
@@ -82,9 +82,23 @@ return (
                                 </View>
                             </View>}): <Text style={styles.weatherText}>Loading</Text>}
                             </ScrollView>}
+                        <View style={styles.imageBox}>
+                        {filtered[0].images.map((v, i) => {
+                        return <Image key={i} style={
+                            {
+                                borderRadius: 5, 
+                                marginTop: 5, 
+                                marginLeft: "auto", 
+                                marginRight: "auto", 
+                                height:150, 
+                                width:170, 
+                                backgroundColor: "white"}
+                            } source={{uri: v.url}}/> 
+                        })}
+                        </View>
                 </View>
         </View>
-    </View>
+    </ScrollView>
 )
 }
 
@@ -101,7 +115,9 @@ const styles = StyleSheet.create({
         width: "95%",
         backgroundColor: "#414f47",
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
+        flexDirection: "row",
+        minHeight: 160
     },
     weatherName: {
         fontWeight: "800",
@@ -113,13 +129,20 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     textBox: {},
+    weatherError: {
+        color: "white",
+        padding: 2,
+        margin: 5,
+        flex: 1,
+    },
     weatherBox: {
-        width: "50%",
+        color: "white",
         backgroundColor: "#414f47",
-        borderRightWidth: 1,
-        borderRightColor: "white",
-        borderRadius: 5
-        
+        borderRadius: 5,
+        flex: 1
+    },
+    imageBox: {
+        flex: 1
     },
     weather: {
         marginLeft: "auto",
@@ -128,7 +151,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexWrap: "wrap",
         flexDirection: "column",
-        borderRadius: 20,
+        borderRadius: 20
     },
     hours: {
         fontWeight: "800",
@@ -137,7 +160,10 @@ const styles = StyleSheet.create({
         fontFamily: "Avenir",
     },
     hoursLight: {
-        fontWeight: "normal"
+        fontWeight: "normal",
+        fontSize: 18,
+        padding: 5,
+        fontFamily: "Avenir",
     },
     park: {
         backgroundColor: "#414f47",
@@ -154,7 +180,8 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         marginLeft: "auto",
         marginRight: "auto",
-        borderRadius: 5
+        borderRadius: 5,
+        minHeight: 400,
     },
     nav: {
         height: 50,
