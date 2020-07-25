@@ -1,9 +1,10 @@
 /* eslint-disable keyword-spacing */
 /* eslint-disable prettier/prettier */
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Button, Text, TextInput } from 'react-native';
 import Activities from './Picker';
 import { TextContext } from './Contexts/TextContext';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function Search(props){
     const [text, setText] = useContext(TextContext);
@@ -17,8 +18,10 @@ export default function Search(props){
             value={text}
             placeholder="Park name..."
     />
-    <Activities/>
-        <Button onPress={props.press} style={styles.button} color="white" title="search"/>
+        <Activities/>
+        <TouchableOpacity onPress={props.press} style={styles.button}>
+            <Text style={styles.buttonText}>Search</Text>
+            </TouchableOpacity>
         </View>
     </View>
     )
@@ -36,9 +39,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#414f47',
         width: '100%' ,
     },
+    buttonText: {
+        textAlign: 'center',
+        fontSize: 22,
+        color: "white"
+        
+     },
     button: {
-        borderWidth: 1,
-        borderColor: 'white'
+        backgroundColor: '#414f47',
+        padding: 10,
+        borderRadius: 10,
+        borderColor: "white",
+        borderWidth: 2,
+        width: 200,
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     searchContainer: {
         textAlign: 'center',

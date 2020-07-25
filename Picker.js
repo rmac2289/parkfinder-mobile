@@ -347,9 +347,7 @@ const styles = StyleSheet.create({
    },
    checked: {
       backgroundColor: "#414f47",
-      borderColor: "white",
       color: "white",
-      borderWidth: 1,
       padding: 5,
       width: 175,
       marginBottom: 5,
@@ -382,7 +380,7 @@ const styles = StyleSheet.create({
       width: 190,
       marginBottom: 5,
       borderRadius: 3,
-      alignItems: "center"
+      alignItems: "center",
    },
    button: {
       backgroundColor: 'white',

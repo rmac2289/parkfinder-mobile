@@ -3,6 +3,7 @@ import { ParkNameContext } from './Contexts/ParkNameContext';
 import { TextContext } from './Contexts/TextContext';
 import Header from './Header';
 import Search from './Search';
+import MapUI from './Map';
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,10 +16,9 @@ import {
 
 const Main = ({ navigation }) => {
   const [parkName, setParkName] = useContext(ParkNameContext);
-  const [text, setText] = useContext(TextContext)
-  
+  const [text] = useContext(TextContext)
   return (
-      <View >
+      <ScrollView >
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
@@ -31,8 +31,13 @@ const Main = ({ navigation }) => {
       onPress={() =>
         navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>
         <Text style={styles.navListItem} to="/">Logout</Text>
-        <Text style={styles.navListItem} to="/signup">Signup</Text>
-        <Text style={styles.navListItem} to="/">Home</Text>
+        <TouchableOpacity 
+      onPress={() =>
+        navigation.navigate('Signup')}  ><Text style={styles.navListItem}>Signup</Text></TouchableOpacity>
+        <TouchableOpacity
+        onPress={() => navigation.navigate('Map')}>
+          <Text style={styles.navListItem}>Map</Text>
+        </TouchableOpacity>
         <Text style={styles.navListItem} to="/addpark">Suggest a Park</Text>
         </View>
         </ScrollView>
@@ -42,11 +47,9 @@ const Main = ({ navigation }) => {
             setParkName(text);
         return navigation.navigate('Parklist')}
           }/>
-          <View style={styles.body}>
-          </View>
         </ScrollView>
       </SafeAreaView>
-      </View>
+      </ScrollView>
   );
 };
 
