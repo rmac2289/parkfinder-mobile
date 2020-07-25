@@ -15,7 +15,7 @@ export default function Park(props){
     const filtered = park.data.filter((value) => {
         return value.fullName === params.parkId
     });
-}
+
 
 return (
     <View style={styles.park}>

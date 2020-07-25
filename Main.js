@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ParkNameContext } from './Contexts/ParkNameContext';
+import { TextContext } from './Contexts/TextContext';
 import Header from './Header';
 import Search from './Search';
 import {
@@ -12,7 +14,9 @@ import {
 } from 'react-native';
 
 const Main = ({ navigation }) => {
-
+  const [parkName, setParkName] = useContext(ParkNameContext);
+  const [text, setText] = useContext(TextContext)
+  
   return (
       <View >
       <StatusBar barStyle="dark-content" />
@@ -34,8 +38,10 @@ const Main = ({ navigation }) => {
         </ScrollView>
     </View>
           <Header />
-          <Search press={() =>
-        navigation.navigate('Parklist')}/>
+          <Search press={() => {
+            setParkName(text);
+        return navigation.navigate('Parklist')}
+          }/>
           <View style={styles.body}>
           </View>
         </ScrollView>

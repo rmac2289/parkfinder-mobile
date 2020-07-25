@@ -11,11 +11,14 @@ import { ParkNameContextProvider } from './Contexts/ParkNameContext';
 import { CommentsContextProvider } from './Contexts/CommentsContext';
 import { RedirectContextProvider } from './Contexts/RedirectContext';
 import { LoginContextProvider } from './Contexts/LoginContext';
+import { TextContextProvider } from './Contexts/TextContext';
+
 const Stack = createStackNavigator();
 
 const App = () => {
 
   return (
+    <TextContextProvider>
     <ActivityContextProvider>
     <LoginContextProvider>
         <ParkNameContextProvider>
@@ -44,6 +47,7 @@ const App = () => {
           </ParkNameContextProvider>
         </LoginContextProvider>
       </ActivityContextProvider>
+      </TextContextProvider>
   );
 };
 

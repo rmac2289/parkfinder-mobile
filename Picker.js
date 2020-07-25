@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { CheckBox } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ActivitiesContext } from './Contexts/ActivitiesContext';
 
-export default function PickerExample(){
-    const [activity, setActivity] = useState('');
+export default function Activities(){
+    const [activities, setActivities] = useContext(ActivitiesContext);
+
     const [showPicker, setShowPicker] = useState(false);
     const [bikingChecked, setBikingChecked] = useState(false);
     const [hikingChecked, setHikingChecked] = useState(false);
@@ -24,65 +25,245 @@ export default function PickerExample(){
     const [surfingChecked, setSurfingChecked] = useState(false);
     const [swimmingChecked, setSwimmingChecked] = useState(false);
     const [wildlifeChecked, setWildlifeChecked] = useState(false);
-   getActivity = activity => setActivity(activity);
   
    const showPickerFunc = () => {
       setShowPicker(!showPicker)
    }
    const pressBiking = () => {
-      setBikingChecked(!bikingChecked)
+      setBikingChecked(!bikingChecked);
+      !activities.includes("Biking") &&
+      setActivities([...activities, "Biking"]);
+      if(activities.includes("Biking")){
+          const targetIndex = activities.indexOf("Biking");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressHiking = () => {
-      setHikingChecked(!hikingChecked)
+      setHikingChecked(!hikingChecked);
+      !activities.includes("Hiking") &&
+      setActivities([...activities, "Hiking"]);
+      if(activities.includes("Hiking")){
+          const targetIndex = activities.indexOf("Hiking");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressCamping= () => {
-      setCampingChecked(!campingChecked)
+      setCampingChecked(!campingChecked);
+      !activities.includes("Camping") &&
+      setActivities([...activities, "Camping"]);
+      if(activities.includes("Camping")){
+          const targetIndex = activities.indexOf("Camping");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressPicnicking = () => {
-      setPicnickingChecked(!picnickingChecked)
+      setPicnickingChecked(!picnickingChecked);
+      !activities.includes("Picnicking") &&
+      setActivities([...activities, "Picnicking"]);
+      if(activities.includes("Picnicking")){
+          const targetIndex = activities.indexOf("Picnicking");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressWildlife = () => {
-      setWildlifeChecked(!wildlifeChecked)
+      setWildlifeChecked(!wildlifeChecked);
+      !activities.includes("Wildlife Watching") &&
+      setActivities([...activities, "Wildlife Watching"]);
+      if(activities.includes("Wildlife Watching")){
+          const targetIndex = activities.indexOf("Wildlife Watching");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressScuba = () => {
-      setScubaChecked(!scubaChecked)
+      setScubaChecked(!scubaChecked);
+      !activities.includes("SCUBA Diving") &&
+      setActivities([...activities, "SCUBA Diving"]);
+      if(activities.includes("SCUBA Diving")){
+          const targetIndex = activities.indexOf("SCUBA Diving");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressSnorkeling = () => {
-      setSnorkelingChecked(!snorkelingChecked)
+      setSnorkelingChecked(!snorkelingChecked);
+      !activities.includes("Snorkeling") &&
+      setActivities([...activities, "Snorkeling"]);
+      if(activities.includes("Snorkeling")){
+          const targetIndex = activities.indexOf("Snorkeling");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressClimbing = () => {
-      setClimbingChecked(!climbingChecked)
+      setClimbingChecked(!climbingChecked);
+      !activities.includes("Climbing") &&
+      setActivities([...activities, "Climbing"]);
+      if(activities.includes("Climbing")){
+          const targetIndex = activities.indexOf("Climbing");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressSurfing = () => {
-      setSurfingChecked(!surfingChecked)
+      setSurfingChecked(!surfingChecked);
+      !activities.includes("Surfing") &&
+      setActivities([...activities, "Surfing"]);
+      if(activities.includes("Surfing")){
+          const targetIndex = activities.indexOf("Surfing");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressFishing = () => {
-      setFishingChecked(!fishingChecked)
+      setFishingChecked(!fishingChecked);
+      !activities.includes("Fishing") &&
+      setActivities([...activities, "Fishing"]);
+      if(activities.includes("Fishing")){
+          const targetIndex = activities.indexOf("Fishing");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressGeocaching = () => {
-      setGeocachingChecked(!geocachingChecked)
+      setGeocachingChecked(!geocachingChecked);
+      !activities.includes("Geocaching") &&
+      setActivities([...activities, "Geocaching"]);
+      if(activities.includes("Geocaching")){
+          const targetIndex = activities.indexOf("Geocaching");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressGuidedTours = () => {
-      setGuidedToursChecked(!guidedToursChecked)
+      setGuidedToursChecked(!guidedToursChecked);
+      !activities.includes("Guided Tours") &&
+      setActivities([...activities, "Guided Tours"]);
+      if(activities.includes("Guided Tours")){
+          const targetIndex = activities.indexOf("Guided Tours");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressHorsebackRiding = () => {
-      setHorsebackRidingChecked(!horsebackRidingChecked)
+      setHorsebackRidingChecked(!horsebackRidingChecked);
+      !activities.includes("Horseback Riding") &&
+      setActivities([...activities, "Horseback Riding"]);
+      if(activities.includes("Horseback Riding")){
+          const targetIndex = activities.indexOf("Horseback Riding");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressMuseumExhibits = () => {
-      setMuseumExhibitsChecked(!museumExhibitsChecked)
+      setMuseumExhibitsChecked(!museumExhibitsChecked);
+      !activities.includes("Museum Exhibits") &&
+      setActivities([...activities, "Museum Exhibits"]);
+      if(activities.includes("Museum Exhibits")){
+          const targetIndex = activities.indexOf("Museum Exhibits");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressOffRoading = () => {
-      setOffRoadingChecked(!offRoadingChecked)
+      setOffRoadingChecked(!offRoadingChecked);
+      !activities.includes("Off-Roading") &&
+      setActivities([...activities, "Off-Roading"]);
+      if(activities.includes("Off-Roading")){
+          const targetIndex = activities.indexOf("Off-Roading");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressSwimming = () => {
-      setSwimmingChecked(!swimmingChecked)
+      setSwimmingChecked(!swimmingChecked);
+      !activities.includes("Swimming") &&
+      setActivities([...activities, "Swimming"]);
+      if(activities.includes("Swimming")){
+          const targetIndex = activities.indexOf("Swimming");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressBoating = () => {
       setBoatingChecked(!boatingChecked)
+      !activities.includes("Boating") &&
+      setActivities([...activities, "Boating"]);
+      if(activities.includes("Boating")){
+          const targetIndex = activities.indexOf("Boating");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
    const pressSkiing = () => {
-      setSkiingChecked(!skiingChecked)
+      setSkiingChecked(!skiingChecked);
+      !activities.includes("Skiing") &&
+      setActivities([...activities, "Skiing"]);
+      if(activities.includes("Skiing")){
+          const targetIndex = activities.indexOf("Skiing");
+          if (activities.length === 1){
+              setActivities([])
+          } else {
+          activities.splice(targetIndex,1);
+          }
+      }
    }
+
       return (
          <View style={styles.pickerContainer}>
             <TouchableOpacity onPress={showPickerFunc} style={styles.button}>

@@ -1,12 +1,13 @@
 /* eslint-disable keyword-spacing */
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Button, TextInput } from 'react-native';
-import PickerExample from './Picker';
-
+import Activities from './Picker';
+import { TextContext } from './Contexts/TextContext';
 
 export default function Search(props){
-    const [text, setText] = useState('');
+    const [text, setText] = useContext(TextContext);
+
     return (
     <View style={styles.search}>
         <View style={styles.searchContainer}>
@@ -16,11 +17,10 @@ export default function Search(props){
             value={text}
             placeholder="Park name..."
     />
-    <PickerExample/>
+    <Activities/>
         <Button onPress={props.press} style={styles.button} color="white" title="search"/>
         </View>
     </View>
-    
     )
 };
 
