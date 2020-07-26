@@ -269,7 +269,8 @@ export default function Activities(){
       return (
          <View style={styles.pickerContainer}>
             <TouchableOpacity onPress={showPickerFunc} style={styles.button}>
-                  <Text style={styles.buttonText}>Activities <FontAwesomeIcon icon={showPicker ? faChevronUp:faChevronDown}/></Text>
+                  <Text style={styles.buttonText}>Activities</Text>
+                  <FontAwesomeIcon icon={showPicker ? faChevronUp:faChevronDown}/>
                </TouchableOpacity>
             {showPicker &&
             <View style={styles.checkboxContainer}>
@@ -387,13 +388,13 @@ const styles = StyleSheet.create({
       alignItems: "center",
    },
    button: {
-      backgroundColor: 'white',
       padding: 10,
       borderRadius: 10,
       width: 200,
       marginLeft: 'auto',
       marginRight: 'auto',
-      backgroundColor: "lightgrey"
+      alignItems: "center",
+      backgroundColor: "rgba(255,255,255,0.9)"
    },
    buttonText: {
       textAlign: 'center',

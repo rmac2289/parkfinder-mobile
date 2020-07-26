@@ -1,14 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import rogue from './images/rogue.jpeg';
 import { useNavigation } from '@react-navigation/native';
 import Footer from './Footer';
+import { LoginContext } from './Contexts/LoginContext';
+import AuthApiService from './services/AuthApiService';
+import TokenService from './TokenService';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Login(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null)
+    const [loggedIn, setLoggedIn] = useContext(LoginContext)
     const navigation = useNavigation();
+    
+    const onLoginSuccess = () => {
+        AsyncStorage.setItem('username', username);
+        setLoggedIn(true);
+        navigation.navigate('Home')
+      };
+// Auth verification on login
+const handleSubmit = ev => {
+    ev.preventDefault();
+    setError(null);
+
+    AuthApiService.postLogin({
+      user_name: username,
+      password: password,
+    })
+      .then(res => {
+        TokenService.saveAuthToken(res.authToken);
+        if (TokenService.hasAuthToken()){
+         return onLoginSuccess()
+        };
+        setUsername('')
+        setPassword('')
+      })
+      .catch(res => setError(res.error))
+  };
 
     return (
         <>
@@ -19,9 +50,14 @@ export default function Login(){
         navigation.navigate('Home')}  >
             <Text style={styles.navListItem}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-      onPress={() =>
-        navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>
+        {loggedIn && 
+        <TouchableOpacity
+        onPress={() => {
+            setLoggedIn(false);
+            TokenService.clearAuthToken()
+        }}>
+          <Text style={styles.navListItem}>Logout</Text>
+        </TouchableOpacity>}
         <TouchableOpacity 
       onPress={() =>
         navigation.navigate('Signup')}  ><Text style={styles.navListItem}>Signup</Text></TouchableOpacity>
@@ -29,14 +65,16 @@ export default function Login(){
         onPress={() => navigation.navigate('Map')}>
           <Text style={styles.navListItem}>Map</Text>
         </TouchableOpacity>
+        {loggedIn && 
         <TouchableOpacity
         onPress={() => navigation.navigate('AddPark')}>
           <Text style={styles.navListItem}>Suggest Park</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
         </View>
     <ImageBackground style={styles.image} source={rogue}>
         <View style={styles.form}>
             <Text style={styles.header}>log in to access user comments or to suggest a park</Text>
+            {error !== null && <Text>{error}</Text>}
             <TextInput 
             onChangeText={username => setUsername(username)}
             value={username}
@@ -47,7 +85,7 @@ export default function Login(){
             value={password}
             placeholder="password"
             style={styles.searchInput}/>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>login</Text>
             </TouchableOpacity>
         </View>

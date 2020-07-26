@@ -20,7 +20,7 @@ export default function Search(props){
     />
         <Activities/>
         <TouchableOpacity onPress={props.press} style={styles.button}>
-            <Text style={styles.buttonText}>Search</Text>
+            <Text style={styles.buttonText}>search</Text>
             </TouchableOpacity>
         </View>
     </View>
@@ -35,26 +35,38 @@ const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
         padding: '2%',
-        paddingTop: 25,
+        paddingTop: 15,
         backgroundColor: '#414f47',
         width: '100%' ,
     },
     buttonText: {
         textAlign: 'center',
-        fontSize: 22,
+        fontSize: 24,
         color: "white",
-        fontFamily: "Avenir"
+        fontFamily: "Avenir",
+        fontWeight: "900",
+        height: 120,
+        width: 120,
+        borderWidth: 5,
+        borderRadius: 60,
+        justifyContent: "center",
+        borderColor: "rgba(255,255,255,0.8)",
+        paddingTop: 35,
         
      },
     button: {
         backgroundColor: '#414f47',
         padding: 10,
-        borderRadius: 10,
-        borderColor: "white",
-        borderWidth: 2,
-        width: 200,
+        borderRadius: 100,
+        borderColor: "rgba(255,255,255,0.8)",
+        borderWidth: 8,
+        width: 160,
+        height: 160,
         marginLeft: 'auto',
         marginRight: 'auto',
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 30
     },
     searchContainer: {
         textAlign: 'center',
@@ -63,11 +75,11 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         backgroundColor: 'rgba(255,255,255,0.9)',
-        height: 40,
+        height: 50,
         borderRadius: 10,
         width: 400,
         paddingLeft: 10,
-        fontSize: 18,
+        fontSize: 20,
         fontFamily: "Avenir"
     }
 });

@@ -2,20 +2,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView, Dimensions, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { ParkContext } from './Contexts/ParkContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FullParkNameContext } from './Contexts/ParkNameContext';
 import MapView, { Marker } from 'react-native-maps';
-import tree from './images/tree.png';
 import Footer from './Footer';
+import parks from './data';
+import { LoginContext } from './Contexts/LoginContext';
 
 export default function Park(props){
-    const [park, setPark] = useContext(ParkContext);
     const [fullParkName, setFullParkName] = useContext(FullParkNameContext);
     const [weather, setWeather] = useState([]);
     const [error, setError] = useState(null);
-    const navigation = useNavigation()
-    const filtered = park.data.filter((value) => {
+    const [loggedIn, setLoggedIn] = useContext(LoginContext)
+    const navigation = useNavigation();
+
+    const filtered = parks.data.filter((value) => {
         return value.fullName === fullParkName
     });
     const filterFunc = (value) => {
@@ -23,10 +24,10 @@ export default function Park(props){
             return value.latLng
         };
     }
-    const latLngFilter = park.data.filter(filterFunc);
+    const latLngFilter = parks.data.filter(filterFunc);
         const lat = latLngFilter[0].latLng[0]
         const long = latLngFilter[0].latLng[1]
-    useEffect(() => {
+    /* useEffect(() => {
         const weatherUrl = `https://api.weather.gov/points/${lat},${long}`
        fetch(weatherUrl)
        .then(res => res.json())
@@ -42,7 +43,7 @@ export default function Park(props){
             })
             .catch(error => setError(error.message))
        });
-    },[])
+    },[])*/
 
 
 return (
@@ -51,18 +52,34 @@ return (
         <View style={styles.nav} className="nav">
         <ScrollView className="nav-list">
             <View style={styles.navList}>
+            <TouchableOpacity
+        onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.navListItem}>Home</Text>
+        </TouchableOpacity>      
+        {loggedIn && 
+        <TouchableOpacity
+        onPress={() => {
+            setLoggedIn(false);
+            TokenService.clearAuthToken()
+        }}>
+          <Text style={styles.navListItem}>Logout</Text>
+        </TouchableOpacity>}
+        {!loggedIn &&  
         <TouchableOpacity 
       onPress={() =>
-        navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>
-        <Text style={styles.navListItem} to="/">Logout</Text>
+        navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>}
+        {!loggedIn && 
         <TouchableOpacity 
       onPress={() =>
-        navigation.navigate('Signup')}  ><Text style={styles.navListItem}>Signup</Text></TouchableOpacity>
+        navigation.navigate('Signup')}  ><Text style={styles.navListItem}>Signup</Text></TouchableOpacity>}
         <TouchableOpacity
         onPress={() => navigation.navigate('Map')}>
           <Text style={styles.navListItem}>Map</Text>
         </TouchableOpacity>
+        {loggedIn && 
+        <TouchableOpacity onPress={() => navigation.navigate('AddPark')}>
         <Text style={styles.navListItem} to="/addpark">Suggest a Park</Text>
+        </TouchableOpacity>}
         </View>
         </ScrollView>
     </View>
@@ -70,7 +87,7 @@ return (
             <Text style={styles.header}>{filtered[0].fullName}</Text>
             {filtered[0].description && <Text style={styles.hoursLight}>{filtered[0].description}</Text>}
             <Text style={styles.hours}>Hours: <Text style={styles.hoursLight}>{filtered[0].hours}</Text></Text>
-            <View style={styles.mainContainer}>
+            <View style={styles.mapContainer}>
             <View style={styles.container}>
         <MapView
         style={styles.mapStyle}
@@ -86,18 +103,6 @@ return (
       </View>
       </View>
             <View style={styles.mainContainer}>
-            {error !== null ? <Text style={styles.weatherError}>Hmm, something went wrong. Please refresh or try again later.</Text>:
-            <ScrollView style={styles.weatherBox}>
-                <Text style={styles.weatherHeader}>Weather</Text>
-            {weather.length !== 0 ? weather.map((v,i) => {
-                    return <View style={styles.weather} key={i}>
-                                <Text style={styles.weatherName}>{v.name}</Text>
-                                <View style={styles.textBox}>
-                                    <Text style={styles.weatherText}>{v.temperature}&#176;F </Text>
-                                    <Text style={styles.weatherText}>{v.shortForecast}</Text>
-                                </View>
-                            </View>}): <Text style={styles.weatherText}>Loading</Text>}
-                            </ScrollView>}
                         <View style={styles.imageBox}>
                         {filtered[0].images.map((v, i) => {
                         return <Image key={i} style={
@@ -106,8 +111,9 @@ return (
                                 marginTop: 5, 
                                 marginLeft: "auto", 
                                 marginRight: "auto", 
-                                height:150, 
-                                width:170, 
+                                height:250, 
+                                width:325, 
+                                marginTop: 30,
                                 backgroundColor: "white"}
                             } source={{uri: v.url}}/> 
                         })}
@@ -122,13 +128,6 @@ return (
 }
 
 const styles = StyleSheet.create({
-    weatherHeader: {
-        fontSize: 28,
-        color: "white",
-        fontWeight: "800",
-        textAlign: "center",
-        padding: 10,
-    },
     mapStyle: {
         width: Dimensions.get('window').width - 75,
         height: 500,
@@ -142,6 +141,15 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5
       },
+      mapContainer: {
+        borderRadius: 5,
+        marginBottom: 10,
+        width: "95%",
+        backgroundColor: "#414f47",
+        marginLeft: "auto",
+        marginRight: "auto",
+        minHeight: 160,
+      },
     mainContainer: {
         borderRadius: 5,
         marginBottom: 10,
@@ -149,52 +157,24 @@ const styles = StyleSheet.create({
         backgroundColor: "#414f47",
         marginLeft: "auto",
         marginRight: "auto",
-        flexDirection: "row",
-        minHeight: 160
-    },
-    weatherName: {
-        fontWeight: "800",
-        color: "white",
-        textAlign: "center"
-    },
-    weatherText: {
-        color: "white",
-        textAlign: "center"
+        minHeight: 160,
+        paddingBottom: 20
     },
     textBox: {},
-    weatherError: {
-        color: "white",
-        padding: 2,
-        margin: 5,
-        flex: 1,
-    },
-    weatherBox: {
-        color: "white",
-        backgroundColor: "#414f47",
-        borderRadius: 5,
-        flex: 1,
-        paddingBottom: 10
-    },
     imageBox: {
-        flex: 1
-    },
-    weather: {
-        marginLeft: "auto",
-        marginRight: "auto",
-        marginTop: 5,
-        display: "flex",
-        flexWrap: "wrap",
-        flexDirection: "column",
-        borderRadius: 20,
+        flex: 1,
+        minHeight: 300
     },
     hours: {
         fontWeight: "800",
         fontSize: 18,
         padding: 5,
         fontFamily: "Avenir",
+        textAlign: "center"
     },
     hoursLight: {
         fontWeight: "normal",
+        textAlign: "center",
         fontSize: 18,
         padding: 5,
         fontFamily: "Avenir",
@@ -207,7 +187,9 @@ const styles = StyleSheet.create({
     header: {
         fontFamily: "AvenirNext-Medium",
         fontSize: 30,
-        textAlign: "center"
+        textAlign: "center",
+        paddingTop: 5,
+        fontFamily: "Avenir-Medium"
     },
     parkContainer: {
         width: "95%",
@@ -216,25 +198,24 @@ const styles = StyleSheet.create({
         marginRight: "auto",
         borderRadius: 5,
         minHeight: 400,
+        marginBottom: 50
     },
     nav: {
-        height: 50,
+        height: 60,
         backgroundColor: '#414f47',
-        borderBottomWidth: 3,
-        borderBottomColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 20,
     },
     navList: {
         flexDirection: 'row',
         display: 'flex',
-        justifyContent: 'center',        
+        justifyContent: 'space-evenly',  
+        padding: 10,
+        alignItems: "center"    
     },
     navListItem: {
         marginRight: 5,
         fontSize: 18,
         color: 'white',
-        paddingTop: 10
+        paddingTop: 10,
+        fontFamily: "Avenir"
     },
 })

@@ -4,7 +4,7 @@ import { TextContext } from './Contexts/TextContext';
 import Header from './Header';
 import Search from './Search';
 import Footer from './Footer';
-
+import { LoginContext } from './Contexts/LoginContext';
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,10 +13,16 @@ import {
   StatusBar,
   TouchableOpacity,
   Text,
-  Dimensions
+  Dimensions,
 } from 'react-native';
+import TokenService from './TokenService';
 
 const Main = ({ navigation }) => {
+  const [loggedIn, setLoggedIn] = useContext(LoginContext)
+  const onLogout = () => {
+    TokenService.clearAuthToken();
+    setLoggedIn(false);
+  }
   const [parkName, setParkName] = useContext(ParkNameContext);
   const [text] = useContext(TextContext)
   return (
@@ -29,21 +35,26 @@ const Main = ({ navigation }) => {
           style={styles.scrollView}>
           <View style={styles.nav} className="nav">
             <View style={styles.navList}>
+        {!loggedIn && <TouchableOpacity 
+      onPress={() =>
+        navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>}
+        {loggedIn &&
+        <TouchableOpacity onPress={() => onLogout()} to="/">
+          <Text style={styles.navListItem}>Logout</Text>
+        </TouchableOpacity>}
+        {!loggedIn && 
         <TouchableOpacity 
       onPress={() =>
-        navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>
-        <Text style={styles.navListItem} to="/">Logout</Text>
-        <TouchableOpacity 
-      onPress={() =>
-        navigation.navigate('Signup')}  ><Text style={styles.navListItem}>Signup</Text></TouchableOpacity>
+        navigation.navigate('Signup')}  ><Text style={styles.navListItem}>Signup</Text></TouchableOpacity>}
         <TouchableOpacity
         onPress={() => navigation.navigate('Map')}>
           <Text style={styles.navListItem}>Map</Text>
         </TouchableOpacity>
+        {loggedIn &&
         <TouchableOpacity
         onPress={() => navigation.navigate('AddPark')}>
           <Text style={styles.navListItem}>Suggest Park</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
         </View>
     </View>
           <Header />
@@ -53,7 +64,6 @@ const Main = ({ navigation }) => {
           }/>
         </ScrollView>
       </SafeAreaView>
-      
       </ScrollView>
       <Footer/>
       </>

@@ -1,19 +1,20 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
-import { ParkContext } from './Contexts/ParkContext';
 import { ParkNameContext } from './Contexts/ParkNameContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ActivitiesContext } from './Contexts/ActivitiesContext';
 import { FullParkNameContext } from './Contexts/ParkNameContext'
 import { useNavigation } from '@react-navigation/native'
-
+import { LoginContext } from './Contexts/LoginContext';
+import parks from './data.js';
+import Footer from './Footer';
 
 export default function Parklist(){
     const [parkName, setParkName] = useContext(ParkNameContext)
     const [fullParkName, setFullParkName] = useContext(FullParkNameContext)
-    const [park] = useContext(ParkContext)
     const [activities] = useContext(ActivitiesContext);
     const navigation = useNavigation();
+    const [loggedIn, setLoggedIn] = useContext(LoginContext)
      function compare(a, b) {
         const nameA = a.fullName.toUpperCase();
         const nameB = b.fullName.toUpperCase();
@@ -29,14 +30,14 @@ export default function Parklist(){
       const checker = (parksData) => activities.every(v => parksData.activities.includes(v));
     
     // maps/filters to show parks matching ANY activities
-    const activitiesList = park.data.sort(compare).filter(checker).map((v,i) => {
+    const activitiesList = parks.data.sort(compare).filter(checker).map((v,i) => {
         return <View key={i + 400}>
             <TouchableOpacity style={styles.button} to={`/park/${v.fullName}`}>
                 <Text style={styles.parkName}>{v.fullName}</Text>
             </TouchableOpacity>
         </View>
     });
-      const parksToDisplay = park.data.filter((v) => {
+      const parksToDisplay = parks.data.filter((v) => {
         return v.fullName.toLowerCase().includes(parkName.toLowerCase())
      });
 
@@ -55,11 +56,47 @@ export default function Parklist(){
     });
 
     return (
+        <>
     <ScrollView style={styles.parkListBox}>
+        <View style={styles.nav} className="nav">
+        <ScrollView className="nav-list">
+            <View style={styles.navList}>
+            <TouchableOpacity
+        onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.navListItem}>Home</Text>
+        </TouchableOpacity>    
+        {loggedIn && 
+        <TouchableOpacity
+        onPress={() => {
+            setLoggedIn(false);
+            TokenService.clearAuthToken()
+        }}>
+          <Text style={styles.navListItem}>Logout</Text>
+        </TouchableOpacity>}
+        {!loggedIn &&    
+        <TouchableOpacity 
+      onPress={() =>
+        navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>}
+        <TouchableOpacity 
+      onPress={() =>
+        navigation.navigate('Signup')}  ><Text style={styles.navListItem}>Signup</Text></TouchableOpacity>
+        <TouchableOpacity
+        onPress={() => navigation.navigate('Map')}>
+          <Text style={styles.navListItem}>Map</Text>
+        </TouchableOpacity>
+        {loggedIn && 
+        <TouchableOpacity onPress={() => navigation.navigate('AddPark')}>
+        <Text style={styles.navListItem} to="/addpark">Suggest a Park</Text>
+        </TouchableOpacity>}
+        </View>
+        </ScrollView>
+    </View>
         <View style={styles.listBox}>
             {!parkList.length ? <Text>Sorry, no parks match that search!</Text>:activities.length > 0 && parkName !== '' ? activitiesList.concat(parkList):activities.length > 0 && parkName === '' ? activitiesList: parkList}
         </View>
     </ScrollView>
+    <Footer/>
+    </>
     
     )
 }
@@ -73,16 +110,40 @@ const styles = StyleSheet.create({
     listBox: {
         width: "95%",
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
+        paddingBottom: 65
     },
     parkName: {
         color: "white",
         padding: 3,
+        fontSize: 16,
+        fontFamily: "Avenir"
     },
     button: {
         padding: 2,
-        alignItems: "center",
+        alignItems: "flex-start",
         borderBottomWidth: 2,
         borderColor: "rgba(255,255,255,0.3)"
-    }
+    },
+    nav: {
+        height: 60,
+        backgroundColor: '#414f47',
+        marginBottom: 20,
+        borderBottomWidth: 3,
+        borderBottomColor: "rgba(255,255,255,0.3)"
+    },
+    navList: {
+        flexDirection: 'row',
+        display: 'flex',
+        justifyContent: 'space-evenly',  
+        padding: 10,
+        alignItems: "center"    
+    },
+    navListItem: {
+        marginRight: 5,
+        fontSize: 18,
+        color: 'white',
+        paddingTop: 10,
+        fontFamily: "Avenir"
+    },
 })

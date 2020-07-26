@@ -1,6 +1,7 @@
 import MapView, { Marker } from 'react-native-maps';
 import React, { useContext } from 'react';
 import tree from './images/tree.png';
+import { LoginContext } from './Contexts/LoginContext'
 import {
     StyleSheet,
     Dimensions,
@@ -8,15 +9,14 @@ import {
     TouchableOpacity,
     Text
   } from 'react-native';
-import { ParkContext } from './Contexts/ParkContext';
+import parks from './data';
 import Footer from './Footer';
 import { useNavigation } from '@react-navigation/native';
 
 export default function MapUI() {
-    const [park] = useContext(ParkContext);
     const navigation = useNavigation();
-
-    const markers = park.data.map((v,i) => {
+  const [loggedIn, setLoggedIn] = useContext(LoginContext)
+    const markers = parks.data.map((v,i) => {
         return <Marker title={v.fullName} description={v.hours} image={tree} key={i} coordinate={{ latitude: parseFloat(v.latLng[0]), longitude: parseFloat(v.latLng[1]) }}/>
     })
     return (
@@ -29,20 +29,26 @@ export default function MapUI() {
         navigation.navigate('Home')}  >
             <Text style={styles.navListItem}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-      onPress={() =>
-        navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>
-        <TouchableOpacity 
-      onPress={() =>
-        navigation.navigate('Signup')}  ><Text style={styles.navListItem}>Signup</Text></TouchableOpacity>
+        {loggedIn && 
         <TouchableOpacity
-        onPress={() => navigation.navigate('Map')}>
-          <Text style={styles.navListItem}>Map</Text>
-        </TouchableOpacity>
+        onPress={() => {
+            setLoggedIn(false);
+            TokenService.clearAuthToken()
+        }}>
+          <Text style={styles.navListItem}>Logout</Text>
+        </TouchableOpacity>}
+        {!loggedIn && <TouchableOpacity 
+      onPress={() =>
+        navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>}
+        {!loggedIn && 
+        <TouchableOpacity 
+      onPress={() =>
+        navigation.navigate('Signup')}  ><Text style={styles.navListItem}>Signup</Text></TouchableOpacity>}
+        {loggedIn && 
         <TouchableOpacity
         onPress={() => navigation.navigate('AddPark')}>
           <Text style={styles.navListItem}>Suggest Park</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
         </View>
     </View>
         

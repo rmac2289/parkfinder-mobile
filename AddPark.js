@@ -4,10 +4,13 @@ import { TextInput } from 'react-native-gesture-handler';
 import shasta from './images/Mt_Shasta.jpeg';
 import { useNavigation } from '@react-navigation/native';
 import Footer from './Footer';
+import { LoginContext } from './Contexts/LoginContext';
+import TokenService from './TokenService';
 
 export default function AddPark(){
     const [parkName, setParkName] = useState('');
     const [location, setLocation] = useState('');
+    const [loggedIn, setLoggedIn] = useContext(LoginContext)
     const [description, setDescription] = useState('');
     const navigation = useNavigation();
 
@@ -20,23 +23,29 @@ export default function AddPark(){
         navigation.navigate('Home')}  >
             <Text style={styles.navListItem}>Home</Text>
         </TouchableOpacity>
+        {loggedIn && 
+        <TouchableOpacity
+        onPress={() => {
+            setLoggedIn(false);
+            TokenService.clearAuthToken()
+        }}>
+          <Text style={styles.navListItem}>Logout</Text>
+        </TouchableOpacity>}
+        {!loggedIn && 
         <TouchableOpacity 
       onPress={() =>
         navigation.navigate('Login')}  >
             <Text style={styles.navListItem}>Login</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
+        {!loggedIn && 
         <TouchableOpacity 
       onPress={() =>
         navigation.navigate('Signup')}  >
             <Text style={styles.navListItem}>Signup</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
         <TouchableOpacity
         onPress={() => navigation.navigate('Map')}>
           <Text style={styles.navListItem}>Map</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-        onPress={() => navigation.navigate('AddPark')}>
-          <Text style={styles.navListItem}>Suggest Park</Text>
         </TouchableOpacity>
         </View>
     <ImageBackground style={styles.image} source={shasta}>
@@ -94,7 +103,6 @@ const styles = StyleSheet.create({
         marginTop: 120,
         marginBottom: 50,
         borderRadius: 5,
-        justifyContent: "center",
     },
     buttonText: {
         textAlign: 'center',
@@ -119,7 +127,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         fontFamily: "Avenir-Medium",
         color: "white",
-        alignItems: "center"
     },
     form: {
         color: "white",

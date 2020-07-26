@@ -6,7 +6,6 @@ import Main from './Main';
 import Login from './Login';
 import Parklist from './ParkList';
 import Signup from './Signup';
-import { ParkContextProvider } from './Contexts/ParkContext';
 import { ActivityContextProvider } from './Contexts/ActivitiesContext';
 import { ParkNameContextProvider } from './Contexts/ParkNameContext';
 import { CommentsContextProvider } from './Contexts/CommentsContext';
@@ -28,7 +27,6 @@ const App = () => {
         <ParkNameContextProvider>
             <CommentsContextProvider>
                 <RedirectContextProvider>
-                  <ParkContextProvider>
                     <NavigationContainer>
                      <Stack.Navigator>
                        <Stack.Screen
@@ -61,7 +59,6 @@ const App = () => {
                         />
                     </Stack.Navigator>
                   </NavigationContainer>
-                </ParkContextProvider>
               </RedirectContextProvider>
             </CommentsContextProvider>
           </ParkNameContextProvider>

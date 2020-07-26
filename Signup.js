@@ -1,17 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import yosemite from './images/yosemite.jpg';
 import { useNavigation } from '@react-navigation/native';
 import Footer from './Footer'
+import AuthApiService from './services/AuthApiService';
+import { LoginContext } from './Contexts/LoginContext';
 
 export default function Signup(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
+    const [success, setSuccess] = useState(null);
+    const [error, setError] = useState(null);
+    const [loggedIn, setLoggedIn] = useContext(LoginContext)
+
     const navigation = useNavigation();
 
+ 
+    // posts user info on signup
+    const handleSignupSubmit = () => {
+         setError(null);
+         AuthApiService.postUser({
+           user_name: username,
+           password: password,
+           full_name: name,
+           email: email,
+         })
+         .then(user => {
+         setUsername('');
+         setEmail('');
+         setName('');
+         setPassword('');
+         setSuccess(true)
+         navigation.navigate('Login');
+     })
+       .catch(res => {
+         setError( res.error );
+       });
+     };
     return (
         <>
     <View style={styles.container}>
@@ -21,25 +49,32 @@ export default function Signup(){
         navigation.navigate('Home')}  >
             <Text style={styles.navListItem}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        {loggedIn && 
+        <TouchableOpacity
+        onPress={() => {
+            setLoggedIn(false);
+            TokenService.clearAuthToken()
+        }}>
+          <Text style={styles.navListItem}>Logout</Text>
+        </TouchableOpacity>}
+        {!loggedIn && <TouchableOpacity 
       onPress={() =>
-        navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>
-        <TouchableOpacity 
-      onPress={() =>
-        navigation.navigate('Signup')}  ><Text style={styles.navListItem}>Signup</Text></TouchableOpacity>
+        navigation.navigate('Login')}  ><Text style={styles.navListItem}>Login</Text></TouchableOpacity>}
         <TouchableOpacity
         onPress={() => navigation.navigate('Map')}>
           <Text style={styles.navListItem}>Map</Text>
         </TouchableOpacity>
+        {loggedIn && 
         <TouchableOpacity
         onPress={() => navigation.navigate('AddPark')}>
           <Text style={styles.navListItem}>Suggest Park</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
         </View>
     <ImageBackground style={styles.image} source={yosemite}>
         <View style={styles.form}>
             <View style={styles.headerBox}>
             <Text style={styles.header}>sign up to access user comments or to suggest a park</Text>
+            {error !== null && <Text style={styles.error}>{error}</Text>}
             </View>
             <TextInput 
             onChangeText={name => setName(name)}
@@ -61,7 +96,7 @@ export default function Signup(){
             value={password}
             placeholder="password"
             style={styles.searchInput}/>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity onPress={handleSignupSubmit}style={styles.button}>
                 <Text style={styles.buttonText}>sign up</Text>
             </TouchableOpacity>
         </View>
@@ -73,6 +108,14 @@ export default function Signup(){
 }
 
 const styles = StyleSheet.create({
+    error: {
+        fontSize: 18,
+        textAlign: "center",
+        padding: 20,
+        borderRadius: 5,
+        fontFamily: "Avenir-Medium",
+        color: "red"
+    },
     nav: {
         height: 60,
         backgroundColor: '#414f47',
@@ -100,7 +143,8 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         fontSize: 22,
-        color: "white"
+        color: "white",
+        fontFamily: "Avenir"
      },
     button: {
         backgroundColor: '#414f47cc',
@@ -135,6 +179,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         fontSize: 18,
         marginBottom: 20,
+        fontFamily: "Avenir"
     },
     container: {
         flex: 1,
