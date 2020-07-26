@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ActivitiesContext } from './Contexts/ActivitiesContext';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
 export default function Activities(){
     const [activities, setActivities] = useContext(ActivitiesContext);
@@ -267,7 +269,7 @@ export default function Activities(){
       return (
          <View style={styles.pickerContainer}>
             <TouchableOpacity onPress={showPickerFunc} style={styles.button}>
-                  <Text style={styles.buttonText}>Activities</Text>
+                  <Text style={styles.buttonText}>Activities <FontAwesomeIcon icon={showPicker ? faChevronUp:faChevronDown}/></Text>
                </TouchableOpacity>
             {showPicker &&
             <View style={styles.checkboxContainer}>
@@ -339,11 +341,13 @@ export default function Activities(){
 const styles = StyleSheet.create({
    text: {
       color: "#414f47",
-      fontSize: 20
+      fontSize: 20,
+      fontFamily: "Avenir"
    },
    textChecked: {
       color: "white",
-      fontSize: 20
+      fontSize: 20,
+      fontFamily: "Avenir"
    },
    checked: {
       backgroundColor: "#414f47",
@@ -394,7 +398,8 @@ const styles = StyleSheet.create({
    buttonText: {
       textAlign: 'center',
       fontSize: 22,
-      color: "#414f47"
+      color: "#414f47",
+      fontFamily: "Avenir"
       
    },
 })

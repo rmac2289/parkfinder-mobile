@@ -3,7 +3,8 @@ import { ParkNameContext } from './Contexts/ParkNameContext';
 import { TextContext } from './Contexts/TextContext';
 import Header from './Header';
 import Search from './Search';
-import MapUI from './Map';
+import Footer from './Footer';
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -11,21 +12,22 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
-  Text
+  Text,
+  Dimensions
 } from 'react-native';
 
 const Main = ({ navigation }) => {
   const [parkName, setParkName] = useContext(ParkNameContext);
   const [text] = useContext(TextContext)
   return (
-      <ScrollView >
+    <>
+      <ScrollView style={styles.App}>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <View style={styles.nav} className="nav">
-        <ScrollView className="nav-list">
             <View style={styles.navList}>
         <TouchableOpacity 
       onPress={() =>
@@ -38,9 +40,11 @@ const Main = ({ navigation }) => {
         onPress={() => navigation.navigate('Map')}>
           <Text style={styles.navListItem}>Map</Text>
         </TouchableOpacity>
-        <Text style={styles.navListItem} to="/addpark">Suggest a Park</Text>
+        <TouchableOpacity
+        onPress={() => navigation.navigate('AddPark')}>
+          <Text style={styles.navListItem}>Suggest Park</Text>
+        </TouchableOpacity>
         </View>
-        </ScrollView>
     </View>
           <Header />
           <Search press={() => {
@@ -49,35 +53,37 @@ const Main = ({ navigation }) => {
           }/>
         </ScrollView>
       </SafeAreaView>
+      
       </ScrollView>
+      <Footer/>
+      </>
   );
 };
 
 const styles = StyleSheet.create({
+  App: {
+    height: Dimensions.get('window').height,
+    backgroundColor: "#414f47"
+  },
   scrollView: {
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
   nav: {
-    height: 50,
+    height: 60,
     backgroundColor: '#414f47',
-    borderBottomWidth: 3,
-    borderBottomColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
 },
 navList: {
     flexDirection: 'row',
     display: 'flex',
-    justifyContent: 'center',        
+    justifyContent: 'space-evenly',  
+    padding: 10,
+    alignItems: "center"    
 },
 navListItem: {
     marginRight: 5,
     fontSize: 18,
     color: 'white',
-    paddingTop: 10
+    paddingTop: 10,
+    fontFamily: "Avenir"
 },
   sectionContainer: {
     marginTop: 32,
@@ -91,6 +97,7 @@ navListItem: {
     marginTop: 8,
     fontSize: 18,
     fontWeight: '400',
+    fontFamily: "Avenir"
   },
   highlight: {
     fontWeight: '700',

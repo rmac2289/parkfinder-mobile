@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         fontSize: 22,
-        color: "white"
+        color: "white",
+        fontFamily: "Avenir"
         
      },
     button: {
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: 400,
         paddingLeft: 10,
-        fontSize: 18
+        fontSize: 18,
+        fontFamily: "Avenir"
     }
 });

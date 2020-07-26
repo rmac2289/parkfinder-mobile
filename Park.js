@@ -5,9 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import { ParkContext } from './Contexts/ParkContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FullParkNameContext } from './Contexts/ParkNameContext';
-import Nav from './Nav';
-
-
+import MapView, { Marker } from 'react-native-maps';
+import tree from './images/tree.png';
+import Footer from './Footer';
 
 export default function Park(props){
     const [park, setPark] = useContext(ParkContext);
@@ -23,10 +23,10 @@ export default function Park(props){
             return value.latLng
         };
     }
-    useEffect(() => {
-        const latLngFilter = park.data.filter(filterFunc);
+    const latLngFilter = park.data.filter(filterFunc);
         const lat = latLngFilter[0].latLng[0]
         const long = latLngFilter[0].latLng[1]
+    useEffect(() => {
         const weatherUrl = `https://api.weather.gov/points/${lat},${long}`
        fetch(weatherUrl)
        .then(res => res.json())
@@ -46,6 +46,7 @@ export default function Park(props){
 
 
 return (
+    <>
     <ScrollView style={styles.park}>
         <View style={styles.nav} className="nav">
         <ScrollView className="nav-list">
@@ -69,6 +70,21 @@ return (
             <Text style={styles.header}>{filtered[0].fullName}</Text>
             {filtered[0].description && <Text style={styles.hoursLight}>{filtered[0].description}</Text>}
             <Text style={styles.hours}>Hours: <Text style={styles.hoursLight}>{filtered[0].hours}</Text></Text>
+            <View style={styles.mainContainer}>
+            <View style={styles.container}>
+        <MapView
+        style={styles.mapStyle}
+        initialRegion={{
+          latitude: parseFloat(lat),
+          longitude: parseFloat(long),
+          latitudeDelta: .025,
+          longitudeDelta: .025,
+        }}
+      >
+          <Marker title={fullParkName} pinColor="green" coordinate={{latitude: parseFloat(lat), longitude: parseFloat(long)}}/>
+      </MapView>
+      </View>
+      </View>
             <View style={styles.mainContainer}>
             {error !== null ? <Text style={styles.weatherError}>Hmm, something went wrong. Please refresh or try again later.</Text>:
             <ScrollView style={styles.weatherBox}>
@@ -98,7 +114,10 @@ return (
                         </View>
                 </View>
         </View>
+        
     </ScrollView>
+    <Footer/>
+    </>
 )
 }
 
@@ -110,8 +129,22 @@ const styles = StyleSheet.create({
         textAlign: "center",
         padding: 10,
     },
+    mapStyle: {
+        width: Dimensions.get('window').width - 75,
+        height: 500,
+        borderRadius: 5
+      },
+      container: {
+        flex: 1,
+        backgroundColor: "#414f47",
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        borderRadius: 5
+      },
     mainContainer: {
         borderRadius: 5,
+        marginBottom: 10,
         width: "95%",
         backgroundColor: "#414f47",
         marginLeft: "auto",
@@ -139,7 +172,8 @@ const styles = StyleSheet.create({
         color: "white",
         backgroundColor: "#414f47",
         borderRadius: 5,
-        flex: 1
+        flex: 1,
+        paddingBottom: 10
     },
     imageBox: {
         flex: 1
@@ -151,7 +185,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexWrap: "wrap",
         flexDirection: "column",
-        borderRadius: 20
+        borderRadius: 20,
     },
     hours: {
         fontWeight: "800",

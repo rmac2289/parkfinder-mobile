@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     headerText: {
-        fontSize: 55,
+        fontSize: 50,
         marginBottom: 0,
         borderWidth: 2,
         borderColor: '#414f47',
@@ -55,8 +55,10 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         color: '#414f47',
         backgroundColor: 'rgba(255,255,255,0.8)',
+        fontFamily: "Avenir-Medium"
     },
     headerP: {
+        fontFamily: "Avenir",
         backgroundColor: 'rgba(255,255,255,0.8)',
         color: '#414f47',
         overflow: 'hidden',

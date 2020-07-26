@@ -15,6 +15,7 @@ import { LoginContextProvider } from './Contexts/LoginContext';
 import { TextContextProvider } from './Contexts/TextContext';
 import MapUI from './Map';
 import Park from './Park';
+import AddPark from './AddPark';
 
 const Stack = createStackNavigator();
 
@@ -53,6 +54,10 @@ const App = () => {
                       <Stack.Screen
                         name="Park"
                         component={Park}
+                        />
+                        <Stack.Screen
+                        name="AddPark"
+                        component={AddPark}
                         />
                     </Stack.Navigator>
                   </NavigationContainer>
