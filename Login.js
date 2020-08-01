@@ -9,6 +9,7 @@ import AuthApiService from './services/AuthApiService';
 import TokenService from './services/TokenService';
 import AsyncStorage from '@react-native-community/async-storage';
 import { UserContext } from './Contexts/UserContext';
+import { TokenContext } from './Contexts/TokenContext';
 
 export default function Login(){
     const [username, setUsername] = useState('');
@@ -17,11 +18,12 @@ export default function Login(){
     const [user, setUser] = useContext(UserContext);
     const [loggedIn, setLoggedIn] = useContext(LoginContext);
     const navigation = useNavigation();
-    
+    const [token, setToken] = useContext(TokenContext);
+
     const onLoginSuccess = async () => {
         setUser(username);
         setLoggedIn(true);
-        navigation.navigate('Home')
+        navigation.navigate('Home');
         return await AsyncStorage.setItem('username', username);
       };
 
@@ -37,7 +39,7 @@ const handleSubmit = ev => {
       .then(res => {
         TokenService.saveAuthToken(res.authToken);
         if (TokenService.hasAuthToken()){
-         return onLoginSuccess()
+        return onLoginSuccess();
         };
         setUsername('')
         setPassword('')
@@ -77,13 +79,19 @@ const handleSubmit = ev => {
     <ImageBackground style={styles.image} source={rogue}>
         <View style={styles.form}>
             <Text style={styles.header}>log in to access user comments or to suggest a park</Text>
-            {error !== null && <Text>{error}</Text>}
+            {error !== null && <View style={styles.error}><Text style={styles.errorText}>{error}</Text></View>}
+            <View style={styles.labelBox}>
+                <Text style={styles.label}>Username</Text>
+            </View>
             <TextInput 
             onChangeText={username => setUsername(username)}
             value={username}
             placeholder="username"
             style={styles.searchInput}
             textContentType="username"/>
+            <View style={styles.labelBox}>
+                <Text style={styles.label}>Password</Text>
+            </View>
             <TextInput 
             onChangeText={password => setPassword(password)}
             value={password}
@@ -91,7 +99,7 @@ const handleSubmit = ev => {
             style={styles.searchInput}
             textContentType="password"
             secureTextEntry={true}/>
-            <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+            <TouchableOpacity activeOpacity={.5} onPress={handleSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>login</Text>
             </TouchableOpacity>
         </View>
@@ -104,6 +112,39 @@ const handleSubmit = ev => {
 }
 
 const styles = StyleSheet.create({
+  labelBox: {
+    width: "20%",
+    marginLeft: 40,
+    marginRight: "auto",
+    backgroundColor: "#414f47cc",
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5
+  },
+  label: {
+    textAlign: "center",
+    fontWeight: "800",
+    color: "white",
+    fontFamily: "Avenir",
+    padding: 3,
+    fontSize: 16
+  },
+    error: {
+      width: "75%",
+      marginLeft: "auto",
+      marginRight: "auto",
+      backgroundColor: "rgba(255,255,255,0.8)",
+      padding: 10,
+      marginBottom: 15,
+      borderColor: "maroon",
+      borderWidth: 2,
+      borderRadius: 5
+    },
+    errorText: {
+      color: "#414f47",
+      fontFamily: "Avenir",
+      fontSize: 18,
+      fontWeight: "800"
+    },
     nav: {
         height: 60,
         backgroundColor: '#414f47',
@@ -125,7 +166,8 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         fontSize: 22,
-        color: "white"
+        color: "white",
+        fontFamily: "Avenir"
         
      },
     button: {
@@ -158,12 +200,13 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         backgroundColor: 'rgba(255,255,255,0.9)',
-        height: 40,
+        height: 60,
         borderRadius: 10,
-        width: 400,
+        width: 350,
         paddingLeft: 10,
-        fontSize: 18,
+        fontSize: 20,
         marginBottom: 20,
+        fontFamily: "Avenir"
     },
     container: {
         flex: 1,

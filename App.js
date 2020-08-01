@@ -17,12 +17,14 @@ import MapUI from './Map';
 import Park from './Park';
 import AddPark from './AddPark';
 import { UserContextProvider } from './Contexts/UserContext';
+import { TokenContextProvider } from './Contexts/TokenContext';
 
 const Stack = createStackNavigator();
 
 const App = () => {
 
   return (
+    <TokenContextProvider>
     <UserContextProvider>
     <TextContextProvider>
     <ActivityContextProvider>
@@ -73,6 +75,7 @@ const App = () => {
       </ActivityContextProvider>
       </TextContextProvider>
       </UserContextProvider>
+      </TokenContextProvider>
   );
 };
 

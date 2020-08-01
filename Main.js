@@ -52,11 +52,10 @@ const Main = ({ navigation }) => {
         onPress={() => navigation.navigate('Map')}>
           <Text style={styles.navListItem}>Map</Text>
         </TouchableOpacity>
-        {loggedIn &&
         <TouchableOpacity
-        onPress={() => navigation.navigate('AddPark')}>
+        onPress={() => {loggedIn ? navigation.navigate('AddPark'):navigation.navigate('Login')}}>
           <Text style={styles.navListItem}>Suggest Park</Text>
-        </TouchableOpacity>}
+        </TouchableOpacity>
         </View>
     </View>
           <Header />

@@ -8,6 +8,7 @@ import MapView, { Marker } from 'react-native-maps';
 import Footer from './Footer';
 import parks from './data';
 import { LoginContext } from './Contexts/LoginContext';
+import TokenService from './services/TokenService';
 
 export default function Park(props){
     const [fullParkName, setFullParkName] = useContext(FullParkNameContext);
@@ -85,7 +86,10 @@ return (
     </View>
         <View style={styles.parkContainer}>
             <Text style={styles.header}>{filtered[0].fullName}</Text>
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CommentList')}>
+            <TouchableOpacity style={styles.button} onPress={() => 
+                {
+                    loggedIn ? navigation.navigate('CommentList'):navigation.navigate('Login')}
+                }>
                 <Text style={styles.buttonText}>User Comments</Text>
             </TouchableOpacity>
             {filtered[0].description && <Text style={styles.hoursLight}>{filtered[0].description}</Text>}

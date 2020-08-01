@@ -76,24 +76,36 @@ export default function Signup(){
             <Text style={styles.header}>sign up to access user comments or to suggest a park</Text>
             {error !== null && <Text style={styles.error}>{error}</Text>}
             </View>
+            <View style={styles.labelBox}>
+                <Text style={styles.label}>Name</Text>
+            </View>
             <TextInput 
             onChangeText={name => setName(name)}
             value={name}
             placeholder="name"
             style={styles.searchInput}
             textContentType="name"/>
+            <View style={styles.labelBox}>
+                <Text style={styles.label}>Email</Text>
+            </View>
             <TextInput 
             onChangeText={email => setEmail(email)}
             value={email}
             placeholder="email"
             style={styles.searchInput}
             textContentType="emailAddress"/>
+            <View style={styles.labelBox}>
+                <Text style={styles.label}>Username</Text>
+            </View>
             <TextInput 
             onChangeText={username => setUsername(username)}
             value={username}
             placeholder="username"
             style={styles.searchInput}
             textContentType="username"/>
+            <View style={styles.labelBox}>
+                <Text style={styles.label}>Password</Text>
+            </View>
             <TextInput 
             onChangeText={password => setPassword(password)}
             value={password}
@@ -113,6 +125,22 @@ export default function Signup(){
 }
 
 const styles = StyleSheet.create({
+    labelBox: {
+        width: "20%",
+        marginLeft: 40,
+        marginRight: "auto",
+        backgroundColor: "#414f47cc",
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5
+    },
+    label: {
+        textAlign: "center",
+        fontWeight: "800",
+        color: "white",
+        fontFamily: "Avenir",
+        padding: 2,
+        fontSize: 16
+    },
     error: {
         fontSize: 18,
         textAlign: "center",
@@ -178,11 +206,11 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         backgroundColor: 'rgba(255,255,255,0.9)',
-        height: 40,
+        height: 60,
         borderRadius: 10,
-        width: 400,
+        width: 350,
         paddingLeft: 10,
-        fontSize: 18,
+        fontSize: 20,
         marginBottom: 20,
         fontFamily: "Avenir"
     },

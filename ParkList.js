@@ -92,7 +92,7 @@ export default function Parklist(){
         </ScrollView>
     </View>
         <View style={styles.listBox}>
-            {!parkList.length ? <Text>Sorry, no parks match that search!</Text>:activities.length > 0 && parkName !== '' ? activitiesList.concat(parkList):activities.length > 0 && parkName === '' ? activitiesList: parkList}
+            {activitiesList.length === 0 || parkList.length === 0 ? <View style={styles.sorry}><Text style={styles.sorryText}>Sorry, no parks match that search!</Text></View>:activities.length > 0 && parkName !== '' ? activitiesList.concat(parkList):activities.length > 0 && parkName === '' ? activitiesList: parkList}
         </View>
     </ScrollView>
     <Footer/>
@@ -104,6 +104,19 @@ export default function Parklist(){
 
 
 const styles = StyleSheet.create({
+    sorry: {
+        width: "95%",
+        borderRadius: 5,
+        backgroundColor: "white",
+    },
+    sorryText: {
+        fontWeight: "700",
+        padding: 10,
+        fontSize: 18,
+        color: "#414f47",
+        textAlign: "center",
+        fontFamily: "Avenir"
+    },
     parkListBox: {
         backgroundColor: "#414f47",
     },

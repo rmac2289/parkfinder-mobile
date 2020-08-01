@@ -75,21 +75,31 @@ export default function AddPark(){
                 to see it posted to the app. Thank you!
                 </Text>
             </View>}
+            <View style={styles.labelBox}>
+                <Text style={styles.label}>Park Name</Text>
+            </View>
             <TextInput 
             onChangeText={parkName => setParkName(parkName)}
             value={parkName}
             placeholder="park name"
             style={styles.searchInput}/>
+            <View style={styles.labelBox}>
+                <Text style={styles.label}>Location</Text>
+            </View>
             <TextInput 
             onChangeText={location => setLocation(location)}
             value={location}
             placeholder="location"
             style={styles.searchInput}/>
+            <View style={styles.labelBox}>
+                <Text style={styles.label}>Description</Text>
+            </View>
             <TextInput 
             onChangeText={description => setDescription(description)}
             value={description}
             placeholder="description"
-            style={styles.searchInput}/>
+            style={styles.description}
+            multiline={true}/>
             <TouchableOpacity onPress={handleSuggestionSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>submit</Text>
             </TouchableOpacity>
@@ -103,6 +113,22 @@ export default function AddPark(){
 }
 
 const styles = StyleSheet.create({
+    labelBox: {
+        width: "25%",
+        marginLeft: 40,
+        marginRight: "auto",
+        backgroundColor: "#414f47cc",
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5
+    },
+    label: {
+        textAlign: "center",
+        fontWeight: "800",
+        color: "white",
+        fontFamily: "Avenir",
+        padding: 3,
+        fontSize: 16
+    },
     successBox: {
         width: "85%",
         marginLeft: "auto",
@@ -134,9 +160,10 @@ const styles = StyleSheet.create({
     },
     headerBox: {
         backgroundColor: "#414f47cc",
-        marginTop: 120,
+        marginTop: 80,
         marginBottom: 50,
         borderRadius: 5,
+        marginBottom: 40
     },
     buttonText: {
         textAlign: 'center',
@@ -156,8 +183,7 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 22,
-        textAlign: "center",
-        padding: 20,
+        padding: 15,
         borderRadius: 5,
         fontFamily: "Avenir-Medium",
         color: "white",
@@ -171,12 +197,23 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         backgroundColor: 'rgba(255,255,255,0.9)',
-        height: 40,
+        height: 60,
         borderRadius: 10,
-        width: 400,
+        width: 350,
         paddingLeft: 10,
-        fontSize: 18,
+        fontSize: 20,
         marginBottom: 20,
+        fontFamily: "Avenir"
+    },
+    description: {
+        backgroundColor: 'rgba(255,255,255,0.9)',
+        height: 120,
+        borderRadius: 10,
+        width: 350,
+        paddingLeft: 10,
+        fontSize: 20,
+        marginBottom: 20,
+        fontFamily: "Avenir"
     },
     container: {
         flex: 1,

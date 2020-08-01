@@ -14,7 +14,7 @@ const CommentsApiService = {
         return response.json();
     })
   },
-  postComment(subject, comment, park_name, token) {
+  postComment(subject, comment, park_name,token) {
     return fetch(`${config2.API_ENDPOINT}/comments`, {
       method: 'POST',
       headers: {

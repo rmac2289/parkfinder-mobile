@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { UserContext } from './Contexts/UserContext';
+import { TokenContext } from './Contexts/TokenContext';
 
 export default function CommentForm(){
     const [subject, setSubject] = useState('');
@@ -13,20 +14,19 @@ export default function CommentForm(){
     const [comments, setComments] = useContext(CommentsContext);
     const [fullParkName] = useContext(FullParkNameContext);
     const [user, setUser] = useContext(UserContext);
-    const [token, setToken] = useState('')
-    // handle comment POST and immediately display new comment
-    console.log(user);
-   
-    async () => {
+    const [token, setToken] = useContext(TokenContext)
+    // handle comment POST and immediately display new comment   
+    
+    const getToken = async () => {
         try {
-          const jsonValue = await AsyncStorage.getItem('parkfinder-auth-token')
-          return jsonValue != null ? setToken(jsonValue) : null
+          const jsonValue = await AsyncStorage.getItem('parkfinder-auth-token');
+          setToken(jsonValue)
         } catch(e) {
           // read error
         }
         console.log('Done.')
-      }
-      console.log(token)
+      };
+
     const handleCommentSubmit = () => {
         const text = {
             date: new Date(),
