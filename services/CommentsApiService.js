@@ -14,12 +14,12 @@ const CommentsApiService = {
         return response.json();
     })
   },
-  postComment(subject, comment, park_name) {
+  postComment(subject, comment, park_name, token) {
     return fetch(`${config2.API_ENDPOINT}/comments`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'authorization': `bearer ${TokenService.getAuthToken()}`,
+        'authorization': `bearer ${token}`,
       },
       body: JSON.stringify({
         subject,

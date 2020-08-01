@@ -6,6 +6,7 @@ import Main from './Main';
 import Login from './Login';
 import Parklist from './ParkList';
 import Signup from './Signup';
+import CommentList from './CommentList';
 import { ActivityContextProvider } from './Contexts/ActivitiesContext';
 import { ParkNameContextProvider } from './Contexts/ParkNameContext';
 import { CommentsContextProvider } from './Contexts/CommentsContext';
@@ -15,12 +16,14 @@ import { TextContextProvider } from './Contexts/TextContext';
 import MapUI from './Map';
 import Park from './Park';
 import AddPark from './AddPark';
+import { UserContextProvider } from './Contexts/UserContext';
 
 const Stack = createStackNavigator();
 
 const App = () => {
 
   return (
+    <UserContextProvider>
     <TextContextProvider>
     <ActivityContextProvider>
     <LoginContextProvider>
@@ -57,6 +60,10 @@ const App = () => {
                         name="AddPark"
                         component={AddPark}
                         />
+                        <Stack.Screen
+                        name="CommentList"
+                        component={CommentList}
+                        />
                     </Stack.Navigator>
                   </NavigationContainer>
               </RedirectContextProvider>
@@ -65,6 +72,7 @@ const App = () => {
         </LoginContextProvider>
       </ActivityContextProvider>
       </TextContextProvider>
+      </UserContextProvider>
   );
 };
 

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import shasta from './images/Mt_Shasta.jpeg';
 import { useNavigation } from '@react-navigation/native';
 import Footer from './Footer';
 import { LoginContext } from './Contexts/LoginContext';
-import TokenService from './TokenService';
+import TokenService from './services/TokenService';
+import SuggestionsApiService from './services/SuggestionsApiService';
 
 export default function AddPark(){
     const [parkName, setParkName] = useState('');
@@ -13,6 +14,21 @@ export default function AddPark(){
     const [loggedIn, setLoggedIn] = useContext(LoginContext)
     const [description, setDescription] = useState('');
     const navigation = useNavigation();
+
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
+
+    // POST park suggestion
+    const handleSuggestionSubmit = () => {
+        SuggestionsApiService.postSuggestion(parkName, location, description)
+            .catch(error => setError(error.error));
+            if (error === null){
+                setSuccess(true)
+            };
+            setLocation('');
+            setDescription('');
+            setParkName('');
+    };
 
     return (
         <>
@@ -53,8 +69,14 @@ export default function AddPark(){
             <View style={styles.headerBox}>
             <Text style={styles.header}>suggest a park</Text>
             </View>
+            {success && 
+            <View style={styles.successBox}>
+                <Text style={styles.success}>Your suggestion has been submitted and is under review, check back soon
+                to see it posted to the app. Thank you!
+                </Text>
+            </View>}
             <TextInput 
-            onChangeText={parkName => setParkName(parnkName)}
+            onChangeText={parkName => setParkName(parkName)}
             value={parkName}
             placeholder="park name"
             style={styles.searchInput}/>
@@ -68,7 +90,7 @@ export default function AddPark(){
             value={description}
             placeholder="description"
             style={styles.searchInput}/>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity onPress={handleSuggestionSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>submit</Text>
             </TouchableOpacity>
         </View>
@@ -81,6 +103,18 @@ export default function AddPark(){
 }
 
 const styles = StyleSheet.create({
+    successBox: {
+        width: "85%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        backgroundColor: "#414f47cc",
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 20
+    },
+    success: {
+        color: "white"
+    },
     nav: {
         height: 60,
         backgroundColor: '#414f47',       

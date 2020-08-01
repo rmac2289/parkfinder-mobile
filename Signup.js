@@ -80,22 +80,27 @@ export default function Signup(){
             onChangeText={name => setName(name)}
             value={name}
             placeholder="name"
-            style={styles.searchInput}/>
+            style={styles.searchInput}
+            textContentType="name"/>
             <TextInput 
             onChangeText={email => setEmail(email)}
             value={email}
             placeholder="email"
-            style={styles.searchInput}/>
+            style={styles.searchInput}
+            textContentType="emailAddress"/>
             <TextInput 
             onChangeText={username => setUsername(username)}
             value={username}
             placeholder="username"
-            style={styles.searchInput}/>
+            style={styles.searchInput}
+            textContentType="username"/>
             <TextInput 
             onChangeText={password => setPassword(password)}
             value={password}
             placeholder="password"
-            style={styles.searchInput}/>
+            style={styles.searchInput}
+            textContentType="password"
+            secureTextEntry={true}/>
             <TouchableOpacity onPress={handleSignupSubmit}style={styles.button}>
                 <Text style={styles.buttonText}>sign up</Text>
             </TouchableOpacity>

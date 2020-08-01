@@ -20,7 +20,7 @@ export default function MapUI() {
     const navigation = useNavigation();
   const [loggedIn, setLoggedIn] = useContext(LoginContext)
     const markers = parks.data.map((v,i) => {
-        return <Marker calloutOffset={-5,-5} image={tree} key={i} coordinate={{ latitude: parseFloat(v.latLng[0]), longitude: parseFloat(v.latLng[1]) }}>
+        return <Marker image={tree} key={i} coordinate={{ latitude: parseFloat(v.latLng[0]), longitude: parseFloat(v.latLng[1]) }}>
                 <Callout onPress={() => {
                   setFullParkName(v.fullName);
                   navigation.navigate('Park');

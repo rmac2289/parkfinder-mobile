@@ -1,20 +1,18 @@
 import config2 from '../config2';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const TokenService = {
-  saveAuthToken(token) {
-    window.sessionStorage.setItem(config2.TOKEN_KEY, token);
+  async saveAuthToken(token) {
+    return await AsyncStorage.setItem("parkfinder-auth-token", token);
   },
-  getAuthToken() {
-    return window.sessionStorage.getItem(config2.TOKEN_KEY);
+  async getAuthToken() {
+    return await AsyncStorage.getItem("parkfinder-auth-token");
   },
-  clearAuthToken() {
-    window.sessionStorage.removeItem(config2.TOKEN_KEY);
+  async clearAuthToken() {
+    return await AsyncStorage.removeItem("parkfinder-auth-token");
   },
   hasAuthToken() {
     return !!TokenService.getAuthToken();
-  },
-  makeBasicAuthToken(userName, password) {
-    return window.btoa(`${userName}:${password}`);
   },
 };
 

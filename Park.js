@@ -85,6 +85,9 @@ return (
     </View>
         <View style={styles.parkContainer}>
             <Text style={styles.header}>{filtered[0].fullName}</Text>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CommentList')}>
+                <Text style={styles.buttonText}>User Comments</Text>
+            </TouchableOpacity>
             {filtered[0].description && <Text style={styles.hoursLight}>{filtered[0].description}</Text>}
             <Text style={styles.hours}>Hours: <Text style={styles.hoursLight}>{filtered[0].hours}</Text></Text>
             <View style={styles.mapContainer}>
@@ -128,6 +131,22 @@ return (
 }
 
 const styles = StyleSheet.create({
+    buttonText: {
+        textAlign: 'center',
+        fontSize: 22,
+        color: "white",
+        fontFamily: "Avenir"
+     },
+    button: {
+        backgroundColor: '#414f47cc',
+        padding: 10,
+        borderRadius: 10,
+        borderColor: "white",
+        borderWidth: 2,
+        width: 200,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
     mapStyle: {
         width: Dimensions.get('window').width - 75,
         height: 500,

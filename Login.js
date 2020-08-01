@@ -6,21 +6,25 @@ import { useNavigation } from '@react-navigation/native';
 import Footer from './Footer';
 import { LoginContext } from './Contexts/LoginContext';
 import AuthApiService from './services/AuthApiService';
-import TokenService from './TokenService';
+import TokenService from './services/TokenService';
 import AsyncStorage from '@react-native-community/async-storage';
+import { UserContext } from './Contexts/UserContext';
 
 export default function Login(){
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(null)
-    const [loggedIn, setLoggedIn] = useContext(LoginContext)
+    const [error, setError] = useState(null);
+    const [user, setUser] = useContext(UserContext);
+    const [loggedIn, setLoggedIn] = useContext(LoginContext);
     const navigation = useNavigation();
     
-    const onLoginSuccess = () => {
-        AsyncStorage.setItem('username', username);
+    const onLoginSuccess = async () => {
+        setUser(username);
         setLoggedIn(true);
         navigation.navigate('Home')
+        return await AsyncStorage.setItem('username', username);
       };
+
 // Auth verification on login
 const handleSubmit = ev => {
     ev.preventDefault();
@@ -40,7 +44,6 @@ const handleSubmit = ev => {
       })
       .catch(res => setError(res.error))
   };
-
     return (
         <>
     <View style={styles.container}>
@@ -79,12 +82,15 @@ const handleSubmit = ev => {
             onChangeText={username => setUsername(username)}
             value={username}
             placeholder="username"
-            style={styles.searchInput}/>
+            style={styles.searchInput}
+            textContentType="username"/>
             <TextInput 
             onChangeText={password => setPassword(password)}
             value={password}
             placeholder="password"
-            style={styles.searchInput}/>
+            style={styles.searchInput}
+            textContentType="password"
+            secureTextEntry={true}/>
             <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>login</Text>
             </TouchableOpacity>

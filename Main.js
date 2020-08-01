@@ -15,9 +15,11 @@ import {
   Text,
   Dimensions,
 } from 'react-native';
-import TokenService from './TokenService';
+import TokenService from './services/TokenService';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Main = ({ navigation }) => {
+  
   const [loggedIn, setLoggedIn] = useContext(LoginContext)
   const onLogout = () => {
     TokenService.clearAuthToken();
